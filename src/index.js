@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 //port at which the server will run
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,7 +16,7 @@ app.use(
     extended: true
   })
 );
-   
+
 // create routes
 app.get("/:type", async (request, response) => {
   const data = await db.getListByType(request, response);
