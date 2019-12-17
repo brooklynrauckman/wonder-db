@@ -1,10 +1,7 @@
-'use strict';
-const path = require('path');
-const serverless = require('serverless-http');
 const db = require("./queries");
 const express = require("express");
-const router = express.Router();
-const cors = require("cors");
+var cors = require("cors");
+// const { Client } = require('pg')
 const bodyParser = require("body-parser");
 //create express app
 const app = express();
@@ -19,10 +16,7 @@ app.use(
     extended: true
   })
 );
-app.use('/.netlify/functions', router);  // path must route to lambda
-app.use('/', (req, res) => res.sendFile(path.join('wonder-db', '../index.html')));
-
-
+   
 // create routes
 app.get("/:type", async (request, response) => {
   const data = await db.getListByType(request, response);
@@ -48,6 +42,3 @@ app.listen(port, () =>
   //a callback that will be called as soon as server start listening
   console.log(`server is listening at http://localhost:${port}`)
 );
-
-module.exports = app;
-module.exports.handler = serverless(app);
